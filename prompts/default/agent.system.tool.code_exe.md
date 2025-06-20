@@ -1,77 +1,108 @@
 ### code_execution_tool
 
-execute terminal commands python nodejs code for computation or software tasks
-place code in "code" arg; escape carefully and indent properly
-select "runtime" arg: "terminal" "python" "nodejs" "output" "reset"
-select "session" number, 0 default, others for multitasking
-if code runs long, use "output" to wait, "reset" to kill process
-use "pip" "npm" "apt-get" in "terminal" to install packages
-to output, use print() or console.log()
-if tool outputs error, adjust code before retrying; knowledge_tool can help
-important: check code for placeholders or demo data; replace with real variables; don't reuse snippets
-don't use with other tools except thoughts; wait for response before using others
-check dependencies before running code
-output may end with [SYSTEM: ...] information comming from framework, not terminal
-usage:
+This tool enables you to execute terminal commands, Python, and Node.js code for computational tasks and software operations.
 
-1 execute python code
+#### Configuration Parameters:
 
-~~~json
+1. **code** (required)
+   - Place executable code within this parameter
+   - Ensure proper escaping and consistent indentation
+   - Use proper syntax based on the selected runtime
+
+2. **runtime** (required)
+   - Available options:
+     - `terminal`: For shell commands and system operations
+     - `python`: For Python code execution
+     - `nodejs`: For JavaScript execution in Node.js environment
+     - `output`: To retrieve output from long-running processes
+     - `reset`: To terminate a running process or session
+
+3. **session** (optional)
+   - Default: 0 (primary session)
+   - Use different integer values for parallel execution contexts
+
+#### Usage Guidelines:
+
+- **Process Management**:
+  - For long-running code, use `"runtime": "output"` to wait for and retrieve results
+  - Use `"runtime": "reset"` to terminate unresponsive processes
+  
+- **Package Management**:
+  - Use `pip` for Python dependencies (with `terminal` runtime)
+  - Use `npm` for Node.js dependencies (with `terminal` runtime)
+  - Use `apt-get` for system packages (with `terminal` runtime)
+
+- **Best Practices**:
+  - For output generation, use `print()` in Python or `console.log()` in Node.js
+  - If errors occur, modify code before retrying; use knowledge_tool for debugging assistance
+  - Remove all placeholders and example data before execution
+  - Verify dependencies are installed before running dependent code
+  - Note that outputs may include framework information in format: [SYSTEM: ...]
+
+- **Constraints**:
+  - Only use with "thoughts" tool between code executions
+  - Wait for execution response before using other tools
+  - Do not reuse code snippets without validating their appropriateness
+
+#### Examples:
+
+1. **Execute Python code**:
+```json
 {
     "thoughts": [
-        "Need to do...",
-        "I can use...",
-        "Then I can...",
+        "Need to get the current working directory",
+        "I can use os.getcwd() in Python",
+        "This will help determine where files will be saved"
     ],
     "tool_name": "code_execution_tool",
     "tool_args": {
         "runtime": "python",
         "session": 0,
-        "code": "import os\nprint(os.getcwd())",
+        "code": "import os\nprint(os.getcwd())"
     }
 }
-~~~
+```
 
-2 execute terminal command
-~~~json
+2. **Execute terminal command**:
+```json
 {
     "thoughts": [
-        "Need to do...",
-        "Need to install...",
+        "Need to install the zip utility",
+        "Using apt-get to install the package"
     ],
     "tool_name": "code_execution_tool",
     "tool_args": {
         "runtime": "terminal",
         "session": 0,
-        "code": "apt-get install zip",
+        "code": "apt-get install zip"
     }
 }
-~~~
+```
 
-2.1 wait for output with long-running scripts
-~~~json
+3. **Wait for output from long-running scripts**:
+```json
 {
     "thoughts": [
-        "Waiting for program to finish...",
+        "Waiting for the data processing task to complete"
     ],
     "tool_name": "code_execution_tool",
     "tool_args": {
         "runtime": "output",
-        "session": 0,
+        "session": 0
     }
 }
-~~~
+```
 
-2.2 reset terminal
-~~~json
+4. **Reset a terminal session**:
+```json
 {
     "thoughts": [
-        "code_execution_tool not responding...",
+        "The process is unresponsive and needs to be terminated"
     ],
     "tool_name": "code_execution_tool",
     "tool_args": {
         "runtime": "reset",
-        "session": 0,
+        "session": 0
     }
 }
-~~~
+```
